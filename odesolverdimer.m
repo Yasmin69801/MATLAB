@@ -1,8 +1,10 @@
-
+% This code was written to solve for the six coupled ODEs that describe the problem of self-association.
+% Ref: Yogurtcu, Osman N., and Margaret E. Johnson. "Cytosolic proteins can exploit membrane localization to trigger functional assembly." PLoS computational biology 14.3 (2018): e1006031
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%function to solve for the self-association problem, and to output the K
 % effective in order to measure equilibrium and enhancement.
 %kmain=((1/kapp)+(1/(4*s*12000)))^-1
+
 function []=odesolverdimer()
  clear;  
  %close all; 
@@ -20,13 +22,13 @@ tspan=[0,1];      %in s
 P0= 16.87;     %uM  
 M0= 136.33;    %uM  
 %needed parameters
-kapp=0.214; %for D=12            %0.214;      %(uM.s)^-1              %0.3556 nm^3/us                
-kfpp= 1.0;        %s^-1                   %1.074 ; %s^-1
-kapm=40.3;                           %40.3;       %(uM.s)^-1              %67.0    %nm^3/us    
-kfpm= 1.0;        %s^-1                   %1.226 ; %s^-1
+kapp=0.214;       %for D=12            %(uM.s)^-1                   %0.3556 nm^3/us                
+kfpp= 1.0;        %s^-1                %1.074 ; %s^-1
+kapm=40.3;        %40.3;               %(uM.s)^-1                   %67.0    %nm^3/us    
+kfpm= 1.0;        %s^-1                %1.226 ; %s^-1
 s=1.00E-03 ;      %sigma (um)
-V=0.9993;        %in um^3                %9.9933e-16 in Liters        % V = (1811.0*(10^-9))*(1811.0*(10^-9))*(304.7*(10^-9))
-A=3.2797;       %in um^2                                     % A= (1811.0*(10^-9))*(1811.0*(10^-9))
+V=0.9993;         %in um^3             %9.9933e-16 in Liters        % V = (1811.0*(10^-9))*(1811.0*(10^-9))*(304.7*(10^-9))
+A=3.2797;         %in um^2                                          % A= (1811.0*(10^-9))*(1811.0*(10^-9))
 g=152.5;          %V/(2*A*s) unitless
 
 
@@ -52,88 +54,87 @@ disp(Y0)
 
 %Plotting the 6 species 
 
-% f1=figure;
-% figure(f1);
-% semilogx(time,y(:,1));
-% title('P');
-% xlabel('Time in seconds')
-% ylabel('Concentration in uM')
-% legend('P');
-% hold on
+Plotting the 6 species 
 
-% f2=figure;
-% figure(f2);
-% semilogx(time,y(:,2));
-% hold on;
-% title('M');
-% xlabel('Time in seconds')
-% ylabel('Concentration in uM')
-% legend('M');
-% hold on
-% 
-% f3=figure;
-% figure(f3);
-% semilogx(time,y(:,3));
-% hold on;
-% title('PM');
-% xlabel('Time in seconds')
-% ylabel('Concentration in uM')
-% legend('PM');
+f1=figure;
+figure(f1);
+semilogx(time,y(:,1));
+title('P');
+xlabel('Time in seconds')
+ylabel('Concentration in uM')
+legend('P');
+hold on
 
-% f4=figure;
-% figure(f4);
-% semilogx(time,y(:,4));
-% hold on;
-% title('PP');
-% xlabel('Time in seconds')
-% ylabel('Concentration in uM')
-% legend('PP');
+f2=figure;
+figure(f2);
+semilogx(time,y(:,2));
+hold on;
+title('M');
+xlabel('Time in seconds')
+ylabel('Concentration in uM')
+legend('M');
+hold on
 
-% f5=figure;
-% figure(f5);
-% semilogx(time,y(:,5));
-% hold on;
-% title('PPM');
-% xlabel('Time in seconds')
-% ylabel('Concentration in uM')
-% legend('PPM');
-% 
-% f6=figure;
-% figure(f6);
+f3=figure;
+figure(f3);
+semilogx(time,y(:,3));
+hold on;
+title('PM');
+xlabel('Time in seconds')
+ylabel('Concentration in uM')
+legend('PM');
+
+f4=figure;
+figure(f4);
 semilogx(time,y(:,4));
 hold on;
 title('PP');
 xlabel('Time in seconds')
 ylabel('Concentration in uM')
-%legend('MPPM');
+legend('PP');
 
-%storing the info in each specific species vector (we need vectors
-%because we want to compare different amounts 
-       
-% p=y(end,1);
-% m=y(end,2);
-% pm=y(end,3);
-% pp=y(end,4);
-% ppm=y(end,5);
-% mppm=y(end,6);
 
-%Ktheory = kapp*((g*kapm*kapm*M0*M0+2*kapm*M0+1))/;
+f5=figure;
+figure(f5);
+semilogx(time,y(:,5));
+hold on;
+title('PPM');
+xlabel('Time in seconds')
+ylabel('Concentration in uM')
+legend('PPM');
 
-% Species={'P';'M';'PM';'PP';'PPM';'MPPM';'Time'};
-% Equilibrium_Value = [p;m;pm;pp;ppm;mppm;time(end)];
-% Initial_Values = [16.87;136.33;0;0;0;0;0];
-% 
-% T=table(Species,Equilibrium_Value,Initial_Values)
+f6=figure;
+figure(f6);
+semilogx(time,y(:,6));
+hold on;
+title('MPPM');
+xlabel('Time in seconds')
+ylabel('Concentration in uM')
+legend('MPPM');
+
+%storing the info in each specific species vector 
+p=y(end,1);
+m=y(end,2);
+pm=y(end,3);
+pp=y(end,4);
+ppm=y(end,5);
+mppm=y(end,6);
+
+Ktheory = kapp*((g*kapm*kapm*M0*M0+2*kapm*M0+1))/;
+
+Species={'P';'M';'PM';'PP';'PPM';'MPPM';'Time'};
+Equilibrium_Value = [p;m;pm;pp;ppm;mppm;time(end)];
+Initial_Values = [16.87;136.33;0;0;0;0;0];
+T=table(Species,Equilibrium_Value,Initial_Values)
 
 
 %the equilibrium we were looking for and where trying to identify
-%keff=(PPsol+PPmembrane)/((Psol+Pmem)^2)
+keff=(PPsol+PPmembrane)/((Psol+Pmem)^2)
 
-% Kaeff= (mppm+ppm+pp)/(p+pm)^2;
-% calcEnh = Kaeff/kapp;
-% enhancement = (g*kapm*kapm*m*m + (kapm+kapm)*m +1) /((1+kapm*m)^2);
-% 
-% fprintf('The effective equilibrium constant is %4.2f and the enhancement is %4.2f \n',Kaeff,enhancement)
+Kaeff= (mppm+ppm+pp)/(p+pm)^2;
+calcEnh = Kaeff/kapp;
+enhancement = (g*kapm*kapm*m*m + (kapm+kapm)*m +1) /((1+kapm*m)^2);
+fprintf('The effective equilibrium constant is %4.2f and the enhancement is %4.2f \n',Kaeff,enhancement)
 
 end
 
